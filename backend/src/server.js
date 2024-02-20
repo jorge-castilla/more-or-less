@@ -17,17 +17,21 @@ app.use('/api/game', gameRoutes);
 const http = require('http');
 const { Server } = require("socket.io");
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+    connectionStateRecovery: {}
+  });
 
 io.on('connection', (socket) => {
-    console.log('Un usuario se ha conectado');
+    console.log('Un cliente se ha conectado');
 
-    socket.on('disconnect', () => {
-        console.log('Un usuario se ha desconectado');
+    socket.on('joinRoom', (roomName, name) => {
+        socket.join(roomName);
+        const msg = `${name} se ha unido a la sala ${roomName}`
+        console.log(msg);
+        io.to(roomName).emit('hello', msg); 
     });
-
-    // Aquí puedes manejar eventos específicos del juego
 });
+
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(`Servidor corriendo en el http://localhost:${PORT}`));

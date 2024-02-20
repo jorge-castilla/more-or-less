@@ -40,3 +40,14 @@ El juego continúa hasta que un jugador alcanza el número predeterminado de pun
 ## Consideraciones Especiales
 - Asegúrese de que todos los jugadores estén de acuerdo con las reglas antes de comenzar.
 - Para mantener el juego dinámico y justo, es recomendable establecer un límite de tiempo para las predicciones.
+
+
+
+
+## TO DO LIST
+- Poder crear una sala.
+- Tener un link para invitar a otros jugadores.
+- Poder chatear con estos jugadores.
+- Máximo 4 jugadores, si no mandar error. 
+
+- Hacer diseño.
