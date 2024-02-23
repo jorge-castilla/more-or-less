@@ -16,19 +16,28 @@ app.use('/api/game', gameRoutes);
 
 const http = require('http');
 const { Server } = require("socket.io");
+const { log } = require('console');
 const server = http.createServer(app);
 const io = new Server(server, {
     connectionStateRecovery: {}
   });
 
+const usersOnRoom = {};
 io.on('connection', (socket) => {
     console.log('Un cliente se ha conectado');
+    socket.on("joinRoom", (roomId, name) => {
+      socket.join(roomId);
 
-    socket.on('joinRoom', (roomName, name) => {
-        socket.join(roomName);
-        const msg = `${name} se ha unido a la sala ${roomName}`
-        console.log(msg);
-        io.to(roomName).emit('hello', msg); 
+      if (!usersOnRoom[roomId]) {
+        usersOnRoom[roomId] = [];
+      }
+      usersOnRoom[roomId].push(name);
+
+      // Emitir evento actualizado con la lista de usuarios a todos los clientes en la sala
+      //updatedUsers
+      io.to(roomId).emit("updatedUsers", usersOnRoom[roomId]);
+
+      console.log("Usuarios en la sala: ", usersOnRoom[roomId]);
     });
 });
 

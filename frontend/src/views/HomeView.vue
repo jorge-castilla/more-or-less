@@ -1,4 +1,5 @@
 <template>
+  <button>Crear a room</button>
   <input type="text" ref="inputRef">
   <button @click="joinRoom1()">Unirse a sala 1</button>
   <button @click="joinRoom2()">Unirse a sala 2</button>
