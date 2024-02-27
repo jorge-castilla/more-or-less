@@ -1,4 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body{
-  background-color: #02211e;
-  color: white;
+  background-color: theme('colors.emerald.950');
 }
