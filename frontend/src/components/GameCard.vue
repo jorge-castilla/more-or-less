@@ -1,27 +1,35 @@
 <template>
-    <div :class="`-mb-0.5 ${suitColor}`"
-        class="relative w-32 aspect-[1/1.4] bg-white shadow-lg rounded-lg flex justify-center items-center p-2 hover:ring-4 ring-rose-600 transition overflow-hidden border-2 border-neutral-200 hover:-translate-y-2">
-        <div class="absolute top-0.5 left-1">
-            <div class="text-center">
-                {{ value }}
+    <div :class="suitColor"
+        class="card relative w-32 aspect-[1/1.4] bg-white rounded-lg flex justify-center items-center">
+        <div class="content border-neutral-200 shadow-lg">
+            <div class="front">
+                <div class="absolute top-0.5 left-1">
+                    <div class="text-center">
+                        {{ value }}
+                    </div>
+                    <Icon :icon="iconSuit" width="12px" class="-mt-0.5"></Icon>
+                </div>
+                <div class="grid grid-cols-3 gap-0.5 h-full p-5">
+                    <div class="flex flex-col justify-between items-center">
+                        <Icon :icon="iconSuit" :width="iconSize" v-for="index in columnValues[0]" :key="index"></Icon>
+                    </div>
+                    <div class="flex flex-col items-center" :class="midColumnClasses">
+                        <Icon :icon="iconSuit" :width="iconSize" v-for="index in columnValues[1]" :key="index"></Icon>
+                    </div>
+                    <div class="flex flex-col justify-between items-center">
+                        <Icon :icon="iconSuit" :width="iconSize" v-for="index in columnValues[2]" :key="index"></Icon>
+                    </div>
+                </div>
+                <div class="absolute bottom-0.5 right-1">
+                    <Icon :icon="iconSuit" width="12px" class="-mb-0.5"></Icon>
+                    <div class="text-center">
+                        {{ value }}
+                    </div>
+                </div>
+
             </div>
-            <Icon :icon="iconSuit" width="12px" class="-mt-0.5"></Icon>
-        </div>
-        <div class="grid grid-cols-3 gap-0.5 h-full py-3">
-            <div class="flex flex-col justify-between">
-                <Icon :icon="iconSuit" :width="iconSize" v-for="index in columnValues[0]" :key="index"></Icon>
-            </div>
-            <div class="flex flex-col" :class="midColumnClasses">
-                <Icon :icon="iconSuit" :width="iconSize" v-for="index in columnValues[1]" :key="index"></Icon>
-            </div>
-            <div class="flex flex-col justify-between">
-                <Icon :icon="iconSuit" :width="iconSize" v-for="index in columnValues[2]" :key="index"></Icon>
-            </div>
-        </div>
-        <div class="absolute bottom-0.5 right-1">
-            <Icon :icon="iconSuit" width="12px" class="-mb-0.5"></Icon>
-            <div class="text-center">
-                {{ value }}
+            <div class="back bg-red-500">
+                <img src="/img/card-back.png" />
             </div>
         </div>
     </div>
@@ -87,4 +95,40 @@ const midColumnClasses = computed(() => {
 
 </script>
 
-<style scoped></style>
+<style scoped>
+.content {
+    position: absolute;
+    width: calc(100%);
+    height: calc(100%);
+    left: 8px;
+    top: 8px;
+    transition: transform 1s;
+    transform-style: preserve-3d;
+}
+
+.front,
+.back {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    backface-visibility: hidden;
+    background-color: white;
+}
+
+.back {
+    background: #03446A;
+    color: white;
+    transform: rotateY(180deg);
+}
+
+.card:hover .content {
+    transform: rotateY(180deg);
+    transition: transform 0.5s;
+}
+
+.card {
+    perspective: 500px;
+    float: left;
+    background: transparent;
+}
+</style>

@@ -4,4 +4,6 @@
 
 body{
   background-color: theme('colors.emerald.950');
+  color: white;
+
 }

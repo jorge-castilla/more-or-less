@@ -6,7 +6,7 @@
     <fwButton @click="joinRoom1()">Unirse a sala 1</fwButton>
     <fwButton @click="joinRoom2()">Unirse a sala 2</fwButton>
     <div class="flex">
-      <GameCard v-for="index in 4" class="ml-2" @click="createRandomNumber()" :value="cardValue[index]" :suit="cardSuit[index]" />
+      <GameCard v-for="index in 4" :key="index" class="ml-2" @click="createRandomNumber()" :value="cardValue[index]" :suit="cardSuit[index]" />
 
     </div>
   </main>
