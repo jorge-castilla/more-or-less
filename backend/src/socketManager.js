@@ -13,6 +13,10 @@ function handleSocketConnection(io, socket) {
     handleUserReady(io, roomId, userId, isReady);
   });
 
+  socket.on("userKick", (roomId, userId) => {
+    handleUserKick(io, roomId, userId);
+  });
+
   socket.on("disconnect", () => {
     handleDisconnect(io, socket);
   });
@@ -54,6 +58,12 @@ function handleUserReady(io, roomId, userId, isReady) {
     const user = usersOnRoom[roomId].find((user) => user.id === userId);
     user.isReady = isReady;
     io.to(roomId).emit("updatedUsers", usersOnRoom[roomId]);
+}
+
+function handleUserKick(io, roomId, userId) {
+  log("Usuario expulsado: ", userId);
+  usersOnRoom[roomId] = usersOnRoom[roomId].filter((user) => user.id !== userId);
+  io.to(roomId).emit("updatedUsers", usersOnRoom[roomId]);
 }
   
 

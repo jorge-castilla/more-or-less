@@ -7,6 +7,7 @@
       <li v-for="user in connectedUsers" :key="user">{{ user }} 
         <button v-if="imCreator && user.id !== id"
         class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+        @click="userkick(user.id)"
         >Kick
         </button>
 
@@ -84,7 +85,12 @@ onMounted(() => {
     connectedUsers.value = usersOnRoom
     console.log('Lista de usuarios actualizada:', usersOnRoom)
     // Por ejemplo, podrías renderizar la lista en un componente Vue
+    if(!usersOnRoom.find(user => user.id === id.value)){
+      console.log('me echaron')
+      window.location.href = '/rooms'
+    }
   })
+
 })
 
 const copyLink = () => {
@@ -92,6 +98,11 @@ const copyLink = () => {
   $link.select()
   document.execCommand('copy')
   console.log('link copiado')
+}
+
+const userkick = (userId) => {
+  console.log('kick', userId);
+  socket.emit('userKick', roomId, userId)
 }
 
 
